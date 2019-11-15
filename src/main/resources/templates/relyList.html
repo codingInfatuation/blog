@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>回复列表</title>
+</head>
+<body>
+
+	<table width="100%" align="center">
+		<tr>
+			<th th:text="回复号"></th>
+			<th th:text="回复内容"></th>
+			<th th:text="回复日期"></th>
+			<th th:text="回复人账号"></th>
+			<th th:text="回复评论号"></th>
+			<th th:text="回复回复号"></th>
+		</tr>
+		<tr th:each="rely:${relyList}">
+			<td th:text="${rely.rely_id}"></td>
+			<td th:text="${rely.rely_content}"></td>
+			<td th:text="${rely.rely_date}"></td>
+			<td th:text="${rely.user.user_account}"></td>
+			<td th:if="${rely.comment!=null}">
+				<span th:text="${rely.comment.comment_id}"></span>
+			</td>
+			<td th:if="${rely.comment==null}">
+				
+			</td>
+			
+			<td th:if="${rely.parent_rely!=null}">
+				<span th:text="${rely.parent_rely.rely_id}"></span>
+			</td>
+			<td th:if="${rely.parent_rely==null}">
+				
+			</td>
+		</tr> 
+		
+	</table>
+
+
+</body>
+</html>

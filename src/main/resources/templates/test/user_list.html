@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+</head>
+<body>
+<table border="1" align="center">
+		
+		<tr>
+			<th>user_id</th>
+			<th>user_account</th>
+			
+		  
+		    <th>profession_id </th>
+		    <th>profession_name</th>
+		   
+		    
+		</tr>
+		<tr th:each="user:${userList}">
+			<td><span th:text="${user.user_id}"></span></td>
+			<td><span th:text="${user.user_account}"></span></td>
+			
+		
+		
+			
+			
+			<td>
+			<span th:if="${user.profession!=null}">
+			<span th:text="${user.profession.profession_id}"></span></span></td>
+			
+			<td><span th:if="${user.profession!=null}"><span th:text="${user.profession.profession_name}"></span></span></td>
+		</tr>
+	</table>
+
+</body>
+</html>

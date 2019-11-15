@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>文章列表</title>
+
+<link th:href="@{/css/index.css}" rel="stylesheet" />
+<meta charset="UTF-8" />
+<link th:href="@{/css/base.css}" rel="stylesheet" />
+<link th:href="@{/css/m.css}" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/silder.js}"></script>
+<link th:href="@{/font/css/font-awesome.css}" rel="stylesheet" />
+<style>
+.round_img {
+	width: 74px;
+	height: 74px;
+	float: left;
+	border-radius: 50%;
+	border: 3px solid #eee;
+	overflow: hidden;
+}
+</style>
+</head>
+<body>
+	<header th:include="fragment/nav::nav"></header>
+
+	<article>
+		<div class="container">
+
+			<h2 class="title_tj">
+				<p>
+					<span>文章列表</span>
+				</p>
+			</h2>
+			<div class="bloglist left">
+				<div th:each="article:${articleList}"
+					style="overflow: hidden; height: 250px; border: 1px solid #DDDDDD; padding: 10px;">
+					<h3>
+
+
+						<a
+							th:href="@{/article/detail/{article_id}(article_id=${article.article_id})}">
+
+							<span th:utext="${article.article_title}"></span>
+						</a>
+					</h3>
+
+					<p class="dateview">
+						<span
+							th:text="${#dates.format(article.article_createdTime,'yyyy-MM-dd HH:mm')}"></span>
+						<span th:text="${article.article_sort.article_sort_name}"></span>
+						<span th:text="${article.user.user_account}"></span> <i
+							class="fa fa-eye"></i>阅读 <span th:text="${article.article_views}"></span>
+						<i class="fa fa-comment"></i>评论<span
+							th:text="${article.comments.size()}"></span> <span
+							th:if="${session.user==null}"><a
+							th:href="@{/article/agree(article_id=${article.article_id})}"><i
+								class="fa fa-thumbs-o-up"></i></a> </span> <span
+							th:if="${session.user!=null}"> <span
+							th:if="${article.userLikes.size()==0}"> <a
+								th:href="@{/article/agree(article_id=${article.article_id},page=${page},user_id=${user.user_id})}">
+									<i class="fa fa-thumbs-o-up"></i>
+							</a>
+						</span> <span th:each="userLikes,state:${article.userLikes}"> <span
+								th:if="${session.user.user_id==userLikes.user.user_id}">
+									<a
+									th:href="@{/article/disagree(user_article_likes_id=${userLikes.user_article_likes_id},page=${page},user_id=${user.user_id})}">
+										<i class="fa fa-thumbs-up"></i>
+								</a>
+							</span> <span th:if="${session.user.user_id!=userLikes.user.user_id}">
+
+									<span th:if="${state.last==true}"><a
+										th:href="@{/article/agree(article_id=${article.article_id},page=${page},user_id=${user.user_id})}">
+											<i class="fa fa-thumbs-o-up"></i>
+									</a> </span>
+							</span>
+						</span>
+						</span>赞<span th:text="${article.userLikes.size()}"></span><span
+							th:if="${session.user!=null}"> <span
+							th:if="${article.user.user_id==session.user.user_id}"> <a
+								th:href="@{/article/top/{article_id}(article_id=${article.article_id})}">置顶</a>
+
+
+								<a
+								th:href="@{/article/edit/{article_id}(article_id=${article.article_id})}">编辑</a>
+								<a
+								th:href="@{/article/delete/{article_id}(article_id=${article.article_id})}">删除</a></span>
+
+						</span>
+					</p>
+					<figure>
+						<img th:src="@{${article.article_attachment}}"
+							style="width: 60%; height: 120px;" />
+					</figure>
+
+					<div style="padding: 10px;">
+						<a title="/"
+							th:href="@{/article/detail/{article_id}(article_id=${article.article_id})}"
+							class="readmore">阅读全文>></a>
+					</div>
+
+					<ul>
+						<li>
+							<table width="60%">
+								<tr>
+									<td><span th:utext="${article.article_content}"></span></td>
+
+								</tr>
+
+							</table>
+
+						</li>
+
+					</ul>
+
+
+				</div>
+
+
+				<center>
+					<span th:if="${page-1} gt '0'"> <a
+						th:href="@{/article/list(page=${page-1},user_id=${user_id})}">上一页</a>
+					</span> <span th:if="${page-1} le '0'"> <span th:text="上一页"></span>
+					</span> <span th:if="${page} lt ${pageCount}"> <a
+						th:href="@{/article/list(page=${page+1},user_id=${user_id})}">下一页</a>
+					</span> <span th:if="${page} ge ${pageCount}"> <span th:text="下一页"></span>
+					</span>
+
+				</center>
+
+			</div>
+
+			<aside class="right">
+				<div>
+					<!--  <iframe width="250" scrolling="no" height="60" frameborder="0"
+						allowtransparency="true" src=""></iframe>-->
+					<span th:if="${user!=null}"> <img
+						th:src="@{'/userhead/'+${user.user_photo}}" class="round_img" />
+					</span> <span th:text="${user.user_account}"></span> <span
+						th:if="${session.user==null}"> <a
+						th:href="@{/user/focus(user_id=${user.user_id})}">关注</a>
+					</span> <span th:if="${session.user!=null}"> <span
+						th:if="${user.user_focused.size()==0}"> <a
+							th:href="@{/user/focus(user_id=${user.user_id})}">关注</a>
+					</span> <span th:each="user_focused,state:${user.user_focused}"> <span
+							th:if="${session.user.user_id==user_focused.focus_user.user_id}">
+								<a
+								th:href="@{/user/exitfocus(user_attention_id=${user_focused.user_attention_id})}">取消关注</a>
+						</span> <span
+							th:if="${session.user.user_id!=user_focused.focus_user.user_id}">
+
+								<span th:if="${state.last==true}"> <a
+									th:href="@{/user/focus(user_id=${user.user_id})}">关注</a>
+							</span>
+						</span>
+
+
+					</span>
+
+
+
+
+					</span>
+
+
+				</div>
+				<div>
+					<ul>	
+						<li><a href="">原创<span th:text="${user.articlesWrited.size()}"></span></a></li>
+						<li><a href="">粉丝<span th:text="${user.user_focused.size()}"></span></a></li>
+						<li><a href="">喜欢<span th:text="${userLikesArticle}"></span></a></li>
+						<li><a href="">评论<span th:text="${user.user_focused.size()}"></span></a></li>
+					
+					</ul>
+					
+					
+					
+					
+				</div>
+				<div class="news">
+					<h3>
+						<p>
+							文章<span>归档</span>
+						</p>
+					</h3>
+					<ul class="rank">
+						<span th:each="date:${dateMap}">
+							<li><a th:href="@{/article/archive(user_id=${user.user_id},date=${date.key})}"  target="_blank"><span
+									th:text="${date.key}"></span>(<span th:text="${date.value}"></span>) </a></li>
+						</span>
+
+					</ul>
+					<h3 class="ph">
+						<p>
+							点击<span>排行</span>
+						</p>
+					</h3>
+					<ul class="paih">
+						<span th:each="article:${articleList}">
+							<li><a th:href="@{/article/detail/{article_id}(article_id=${article.article_id})}" title="" target="_blank"><span
+									th:text="${article.article_title}"></span> </a></li>
+						</span>
+
+
+					</ul>
+				</div>
+			</aside>
+		</div>
+
+	</article>
+	<footer th:include="fragment/footer::footer"></footer>
+
+</body>
+</html>

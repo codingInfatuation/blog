@@ -1,0 +1,23 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>显示所有专业</title>
+</head>
+<body>
+	  <table width="50%" border="1" align="center">
+		<tr>
+			<th>专业ID</th>
+			<th>专业名称</th>
+			<th>学生数目</th>
+			
+		</tr>
+		<tr th:each="profession:${professionList}">
+			<td th:text="${profession.profession_id}"></td>
+			<td th:text="${profession.profession_name}"></td>
+			<td th:text="${profession.users.size()}"></td>
+			
+		</tr>
+	</table>
+</body>
+</html>

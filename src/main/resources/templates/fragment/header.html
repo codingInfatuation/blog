@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+
+</head>
+<header th:fragment="header">
+	<div id="logo">
+		<a href="/"></a>
+	</div>
+	<h2 id="mnavh">
+		<span class="navicon"></span>
+	</h2>
+	<nav class="topnav" id="topnav">
+		<a th:href="@{/index}"><span>首页</span><span class="en">Protal</span></a><a
+			th:href="@{/about}"><span>关于我</span><span class="en">About</span></a><a
+			th:href="@{/newlist}"><span>慢生活</span><span class="en">Life</span></a><a
+			th:href="@{/moodlist}"><span>碎言碎语</span><span class="en">Doing</span></a><a
+			th:href="@{/share}"><span>模板分享</span><span class="en">Share</span></a>
+		<a th:href="@{/article/add}"><span>写文章</span><span class="en">Write</span></a>
+	</nav>
+
+
+</header>
+</html>

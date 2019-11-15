@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery便利多个相同的class，点击显示隐藏图标，显示及隐藏其下的内容</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+</head>
+<body>
+ 
+<style>
+    body{
+        background-color: #FFFFFF;
+        letter-spacing: 2px;
+    }
+    .box{
+        padding-top: 100px;
+        width: 50%;
+        margin: 0 auto;
+    }
+ 
+    ul li ul{
+        margin: 20px 0 20px 40px;
+    }
+    .img_sh{
+        margin: 20px 0;
+    }
+ 
+    .img_sh img{
+        float: left;
+        padding-right: 10px;
+    }
+ 
+</style>
+<script>
+    //页面加载完毕后加载
+    window.onload = function () {
+        //遍历class类名叫img_sh的li
+        $(".img_sh").each(function () {
+            //将遍历到的类赋给li
+            var li = $(this);
+            //执行操作，li的子元素p标签里的子元素类名为jia的加号图片点击后执行函数
+            li.children("p").children(".jia").click(function () {
+                //点击的自身加号图片要隐藏
+                li.children("p").children(".jia").hide();
+                //点击完的加号图片要隐藏，而相反类名为jian的减号图片要显示，toggle的作用是取反（既显示或隐藏）
+                li.children("p").children(".jian").toggle();
+                //下面的ul列也是取反
+                li.children("ul").toggle();
+            })
+            //同理
+            li.children("p").children(".jian").click(function () {
+                li.children("p").children(".jian").hide();
+                li.children("p").children(".jia").toggle();
+                li.children("ul").toggle();
+            })
+ 
+        })
+    }
+</script>
+ 
+ 
+<div class="container-fluid">
+    <div class="box ">
+        <ul class="list-unstyled">
+            <li class="img_sh">
+                <p>  
+                    刘吉祥jq测试
+                    <img src="images/img01.jpg" alt="" class="img-responsive jia" style="display: none">
+                    <img src="images/img02.jpg" alt="" class="img-responsive jian"  style="display: block" >
+                </p>
+                <ul class="list-unstyled"  style="display: block">
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                </ul >
+            </li>
+            <li class="img_sh">
+                <p>
+                    刘吉祥jq测试
+                    <img src="images/img01.jpg" alt="" class="img-responsive jia" style="display: block" >
+                    <img src="images/img02.jpg" alt="" class="img-responsive jian" style="display: none">
+                </p>
+                <ul class="list-unstyled"  style="display: none">
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                </ul >
+            </li>
+            <li class="img_sh">
+                <p>
+                    刘吉祥jq测试
+                    <img src="images/img01.jpg" alt="" class="img-responsive jia" style="display: block" >
+                    <img src="images/img02.jpg" alt="" class="img-responsive jian" style="display: none">
+                </p>
+                <ul class="list-unstyled"  style="display: none">
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                </ul >
+            </li>
+            <li class="img_sh">
+                <p>
+                    刘吉祥jq测试
+                    <img src="images/img01.jpg" alt="" class="img-responsive jia" style="display: block" >
+                    <img src="images/img02.jpg" alt="" class="img-responsive jian" style="display: none">
+                </p>
+                <ul class="list-unstyled"  style="display: none">
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                </ul >
+            </li>
+            <li class="img_sh">
+                <p>
+                    刘吉祥jq测试
+                    <img src="images/img01.jpg" alt="" class="img-responsive jia" style="display: block" >
+                    <img src="images/img02.jpg" alt="" class="img-responsive jian" style="display: none">
+                </p>
+                <ul class="list-unstyled"  style="display: none">
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                    <li>●&nbsp 吃葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮;</li>
+                </ul >
+            </li>
+        </ul>
+    </div>
+ 
+</div>
+</body>
+</html>

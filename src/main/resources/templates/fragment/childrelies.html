@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+
+</head>
+<body>
+	<div th:fragment="hhhh">
+		<span th:text="hhhhh"></span>
+	</div>
+
+	<div th:fragment="getChildRelies(${rely.relies},n)">
+
+		<div th:include="fragment/childrelies::hhhh"></div>
+		<div th:each="rely1:${rely.relies}">
+
+			<span th:style="|padding-left:${30*n}px|"></span> <span
+				th:text="${rely1.rely_id}"></span>回复人:<span
+				th:text="${rely1.user.user_account}"></span> 回复时间1<span
+				th:text="${rely1.rely_date}"></span> 回复内容1:<span
+				th:text="${rely1.rely_content}"></span>
+			<!--  <div th:if="${not #lists.isEmpty(rely1.relies)}">
+				<span th:text="${rely1.relies}"></span>
+				<div th:include="fragment/childrelies::hhhh"></div>
+			</div>-->
+			 <!--   <div th:unless="${#lists.isEmpty(rely1.relies)}"
+				th:include="fragment/childrelies::getChildRelies(${rely1.relies},${n+1})"></div>-->
+
+
+		</div>
+	</div>
+
+</body>
+</html>

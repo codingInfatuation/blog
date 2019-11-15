@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+
+</head>
+<header th:fragment="nav">
+	<div id="logo">
+		<a href="/"></a>
+	</div>
+	<h2 id="mnavh">
+		<span class="navicon"></span>
+	</h2>
+	<nav class="topnav" id="topnav">
+		<a th:href="@{/index}"><span>首页</span><span class="en">Index</span></a>
+		<a th:href="@{/article/add}"><span>写文章</span><span class="en">Write</span></a>
+		
+		 <span th:if="${session.user!=null}">
+		 	<a
+			th:href="@{/article/list(user_id=${session.user.user_id})}"><span>我的博客</span><span class="en">List</span></a>
+		 	 <a
+			th:href="@{/logout}"><span>注销</span><span class="en">Logout</span></a>
+		 </span>
+		 <span th:if="${session.user==null}">
+		 	 <a
+			th:href="@{/login}"><span>登录</span><span class="en">Login</span></a>
+		 </span>
+		 
+		 
+		
+	</nav>
+
+
+</header>
+</html>

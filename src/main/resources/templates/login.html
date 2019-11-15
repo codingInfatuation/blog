@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>用户登录</title>
+<link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}" />
+</head>
+<body>
+	<center>
+		<h2>用户登录</h2>
+		<form th:action="@{/login}" method="post">
+
+			<ul style="list-style-type: none;">
+				<li><span><i class="fa fa-user"></i></span><input type="text"
+					name="user_account" placeholder="用户名" /></li>
+				<li><span><i class="fa fa-lock"></i></span> <input
+					type="password" name="user_password" placeholder="密码" /></li>
+				<!--   
+                <li>
+                    <input type="text" class="code" name="code"/>
+                    <span><i class="fa fa-check-square-o"></i></span>
+                 <img src="{{url('admin/code')}}" alt="" onclick="this.src='{{url('admin/code')}}?'+Math.random()">
+                </li>-->
+               
+				<li><input type="submit" value="立即登录" /></li>
+			</ul>
+		</form>
+	</center>
+</body>
+</html>

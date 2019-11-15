@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="UTF-8" />
+<title
+	th:text="${article.article_title}+'-'+${article.user.user_account}+'的博客'"></title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/wangEditor.css}" />
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+
+<link th:href="@{/css/base.css}" rel="stylesheet" />
+<link th:href="@{/css/m.css}" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/silder.js}"></script>
+<link th:href="@{css/comment.css}" rel="stylesheet"/>
+
+<style>
+.page1 {
+	border: 1px solid #DDDDDD;
+	line-height: 30px;
+	padding-left: 10px;
+}
+
+.page-header {
+	height: 80px;
+	overflow: hidden;
+	margin: 0px;
+}
+
+.continue_read {
+	padding-top: 10px;
+}
+
+.commentTopic {
+	border: 1px solid #DDDDDD;
+	margin-top: 10px;
+	padding: 10px;
+}
+
+#comments {
+	border: 1px solid #DDDDDD;
+	margin-top: 10px;
+	padding: 10px;
+}
+
+.comment {
+	height: 50px;
+	border-top: 1px solid #DDDDDD;
+	padding-top: 10px;
+}
+
+.agree {
+	line-height: 30px;
+	padding: 10px;
+	border-bottom: 1px solid #DDDDDD;
+	padding-right: 50px;
+}
+
+.round_img {
+	width: 74px;
+	height: 74px;
+	float: left;
+	border-radius: 50%;
+	border: 3px solid #eee;
+	overflow: hidden;
+}
+</style>
+</head>
+<body>
+	<header th:include="fragment/nav::nav"></header>
+
+	<div class="container">
+		<div class="col-md-9">
+
+			<div class="page1">
+
+
+				<div class="page-header col-md-12">
+					<h3 th:utext="${article.article_title}"></h3>
+					<h6 class="text-muted">
+						文章发表于<span
+							th:text="${#dates.format(article.article_createdTime,'yyyy-MM-dd HH:mm:ss')}"></span>，共有<span
+							th:text="${article.article_views}"></span>次浏览，0个评论
+					</h6>
+
+
+				</div>
+
+				<div class="page_content col-md-12">
+
+
+					<span th:utext="${article.article_content}"></span>
+
+				</div>
+
+			</div>
+			<div class="commentTopic">
+				<h3>发布评论</h3>
+				<form action="/comment/insert" method="post">
+
+					<div class="col-md-12">
+						<br /> <input type="hidden" th:value="${article.article_id}"
+							name="article_id" />
+
+						<textarea cols="30" rows="4" name="comment_content"
+							placeholder="留言内容" class="form-control"></textarea>
+					</div>
+					<input type="submit" value="发表评论" class="btn btn-primary" />
+
+
+				</form>
+			</div>
+
+			<div id="comments">
+				<h3>网友评论</h3>
+				<div th:if="${#lists.isEmpty(article.comments)}">暂无评论</div>
+
+
+
+				<div th:each="comment:${article.comments}">
+
+
+					<div class="comment col-md-12">
+						<div class="col-md-1 ">
+
+							<img th:src="${comment.user.user_photo}" class="round_img" />
+						</div>
+						<div class="col-md-7">
+							<a href="#"><span th:text="${comment.user.user_account}"></span></a><br />
+							<span th:utext="${comment.comment_content}"></span>
+						</div>
+						<div class="col-md-4 comment1">
+
+
+						
+							<form class="form-inline"
+								th:action="@{/rely/insert/comment/{comment_id}(comment_id=${comment.comment_id})}"
+								method="post" style="border: 1px solid black;">
+								<div class="from-group">
+								<label class="control-label">回复内容</label><input type="text" name="rely_content" class="from-control"/> <input
+									type="submit" th:value="发表回复" class="from-control" />
+									</div>
+							</form>
+
+							<span
+								th:text="${#dates.format(comment.comment_date,'yyyy-MM-dd HH:mm:ss')}"></span>
+						</div>
+					</div>
+					<div class="agree">
+						<p class="text-right">
+							<a href=""><i class="fa fa-thumbs-o-up"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+								href=""><i class="fa fa-thumbs-o-down"></i></a>
+						</p>
+					</div>
+					<span th:text="${comment.comment_id}"></span>
+
+					<div th:each="rely:${comment.relies}">
+						<span th:style="|padding-left:30px|"></span> <span
+							th:text="${rely.rely_id}"></span>回复人:<span
+							th:text="${rely.user.user_account}"></span> 回复时间<span
+							th:text="${rely.rely_date}"></span> 回复内容:<span
+							th:text="${rely.rely_content}"></span>
+
+					
+
+						<form
+							th:action="@{/rely/insert/rely/{rely_id}(rely_id=${rely.rely_id})}"
+							method="post" class="form-inline">
+							<div class="form-group">
+								<label class="control-label">回复内容:</label><input type="text"
+									name="rely_content" class="form-control" /> <input
+									type="submit" th:value="发表回复" class="from-control" />
+							</div>
+						</form>
+						<div th:if="${not #lists.isEmpty(rely.relies)}">
+							<div
+								th:include="fragment/childrelies::getChildRelies(${rely.relies},2)"></div>
+						</div>
+					</div>
+				</div>
+
+			
+			
+			
+			
+			
+			
+			</div>
+		</div>
+
+		<div class="col-md-3"></div>
+
+		<footer th:include="fragment/footer::footer"></footer>
+	</div>
+	<!--  <div th:each="comment:${article.comments}">
+				<div th:include="fragment/comment::commentList"></div>
+	</div>-->
+
+
+<script type="text/javascript" th:src="@{js/comment.js}"></script>
+</body>
+</html>
+

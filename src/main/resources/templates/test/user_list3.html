@@ -1,0 +1,40 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>显示所有用户</title>
+</head>
+<body>
+
+	<h3 align="center">显示所有用户及其相关信息</h3>
+	<table width="50%" border="1" align="center">
+		<tr>
+			<th>用户ID</th>
+			<th>用户账号</th>
+			<th>用户密码</th>
+			<th>专业名称</th>
+			<th>乡镇名称</th>
+		
+			<th>发表文章数目</th>
+		</tr>
+		<tr th:each="user:${userList}">
+			<td th:text="${user.user_id}"></td>
+			<td th:text="${user.user_account}"></td>
+			<td th:text="${user.user_password}"></td>
+			<td><span th:if="${user.profession!=null}"> <span th:text="${user.profession.profession_name}"></span></span>
+			<span th:if="${user.profession==null}"><span th:text="${user.profession}"></span> </span>
+			</td>
+			
+			<td><span th:if="${user.town!=null}"> <span th:text="${user.town.town_name}"></span></span>
+			<span th:if="${user.town==null}"><span th:text="${user.town}"></span> </span>
+			</td>
+			
+		
+			
+			
+			<td th:text="${user.articlesWrited.size()}"></td>
+		</tr>
+	
+	</table>
+</body>
+</html>

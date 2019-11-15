@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>hangge.comm</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<script th:src="@{js/jquery.min.js}"></script>
+<script th:src="@{js/bootstrap.min.js}"></script>
+<style>
+.tag_name {
+	display: block;
+	padding: 2px 8px;
+	background: #e9e9e9;
+	border-radius: 2px;
+	font-size: 12px;
+	max-width: 480px;
+	min color: #4f4f4f;
+	overflow: hidden;
+	white-space: nowrap;
+	width:10px;
+}
+
+.tag__item-box {
+	margin-top: 4px;
+	display: flex;
+	flex-wrap: nowrap;
+	font-size: 14px;
+	line-height: 20px;
+	float:left;
+}
+.tag__box .tag_item-list {
+    margin-top: -4px;
+    display: flex;
+    flex-wrap: wrap;
+}
+</style>
+<script>
+	//初始参数个数
+	var tagCount = 2;
+
+	$(function() {
+		//新增按钮点击
+		$('#addTag')
+				.on(
+						'click',
+						function() {
+							tagCount++;
+							$node = '<span class="tag__item-box"><input type="text" name="label"  id="label'+tagCount+'" placeholder="label'+tagCount+'" class="tag_name"/>'
+									+ '<button class="removeTag btn btn-default">删除</button></span>';
+
+							//新表单项添加到“新增”按钮前面
+							$(this).parent().before($node);
+						});
+
+		//删除按钮点击
+		$('form').on('click', '.removeTag', function() {
+			$(this).parent().remove();
+			//varCount--;
+		});
+	});
+</script>
+<script>
+	//初始参数个数
+	var categoryCount = 2;
+
+	$(function() {
+		//新增按钮点击
+		$('#addCategory')
+				.on(
+						'click',
+						function() {
+							categoryCount++;
+							$node = '<span class="tag__item-box"><input type="text" name="category"  id="category'+categoryCount+'" placeholder="category'+categoryCount+'" class="tag_name"/>'
+									+ '<button class="removeCategory btn btn-default">删除</button></span>';
+
+							//新表单项添加到“新增”按钮前面
+							$(this).parent().before($node);
+						});
+
+		//删除按钮点击
+		$('form').on('click', '.removeCategory', function() {
+			$(this).parent().remove();
+			//varCount--;
+		});
+	});
+</script>
+</head>
+<body>
+	<div id="container">
+		<form id="myForm" method="post" th:action="@{/article/labels}">
+			<span class="tag__item-box"> <input type="text" name="label"
+				id="var1" placeholder="label1" class="tag_name" />
+				<button class="removeVar btn btn-default">删除</button>
+			</span> <span class="tag__item-box"> <input type="text" name="label"
+				id="var2" placeholder="label2" class="tag_name" />
+				<button class="removeVar btn btn-default">删除</button> <!--  </span> <span> <a id="addVar" class=" btn btn-default">新增一项 </a>-->
+			</span>
+			<p class="alignRight">
+				<input type="submit" value="提交" />
+			</p>
+		</form>
+	</div>
+
+	<!-- 按钮触发模态框 -->
+	<button class="btn btn-primary btn-lg" data-toggle="modal"
+		data-target="#myModal">发表文章</button>
+	<!-- 模态框（Modal） -->
+	<form role="form">
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">×</button>
+						<h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+					</div>
+					<div class="modal-body">
+
+						<div class="tag_item-list form-group " >
+							 <span class="tag__item-box"><label for="label" >文章标签</label>
+							 </span>
+							  <span class="tag__item-box">
+								<input type="text" name="label" id="var1" placeholder="label1"
+								class="tag_name" />
+								<button class="removeVar btn btn-default">删除</button>
+							</span> <span class="tag__item-box"> <input type="text"
+								name="label" id="var2" placeholder="label2" class="tag_name" />
+								<button class="removeTag btn btn-default">删除</button>
+							</span> <span> <a id="addTag" class=" btn btn-default">新增标签 </a>
+							
+							</span>
+							<p >最多添加五个个人标签</p>
+						</div>
+						<div class="tag_item-list form-group " >
+							
+							 <span class="tag__item-box"><label for="category" class="control-label">个人分类</label>
+							  </span>
+							  <span class="tag__item-box">
+								<input type="text" name="category" id="category1" placeholder="category1"
+								class="tag_name" />
+								<button class="removeCategpory btn btn-default">删除</button>
+							</span> 
+							<span class="tag__item-box"> <input type="text"
+								name="category" id="category2" placeholder="category2" class="tag_name" />
+								<button class="removeCategpory btn btn-default">删除</button>
+							</span> <span> <a id="addCategory" class=" btn btn-default">新增分类 </a>
+							
+							</span> 
+						</div>
+						<div class="form-group">
+							<label for="articlesort">文章类型</label> 
+							<select name="articlesort">
+								<option th:value="原创"/>
+								<option th:value="翻译"/>
+								<option th:value="转载"/>
+							</select>
+							<p class="help-block">这里是块级帮助文本的实例。</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							关闭</button>
+						<button type="submit" class="btn btn-primary">提交更改</button>
+					</div>
+				</div>
+
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+	</form>
+	<!-- /.modal -->
+	<script>
+		$(function() {
+			$('#myModal').modal('hide')
+		});
+	</script>
+	<script>
+		/*$(function() {
+			$('#myModal').on('hide.bs.modal', function() {
+				alert('嘿，我听说您喜欢模态框...');
+			})
+		});*/
+	</script>
+	<script type="text/javascript">
+		$(function() {
+			$('.tag_name').bind('input propertychange', function() {
+				var obj = $(this);
+				var text_length = obj.val().length; //获取当前长度
+				var width = parseInt(text_length) * 12; //该12是改变前的宽度除以当前字符串的长度，算出每个字符的长度
+				obj.css('width', width + 'px');
+			});
+		})
+	</script>
+
+
+</body>
+</html>

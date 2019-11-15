@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>用户文章视图</title>
+</head>
+<body>
+	<a th:href="@{/test}">返回测试界面</a>
+	<h2 align="center">用户文章视图</h2>
+
+	<table align="center" border="1">
+
+		<tr>
+			<th>用户号</th>
+			<th>用户账号</th>
+			<th>文章ID</th>
+			<th>文章标题</th>
+			<th>文章创建时间</th>
+		</tr>
+		<tr th:each="userArticleView:${userArticleViewsList}">
+			<td><span th:text="${userArticleView.user_id}"></span></td>
+			<td><span th:text="${userArticleView.user_account}"></span></td>
+			<td><span th:text="${userArticleView.article_id}"></span></td>
+			<td><span th:text="${userArticleView.article_title}"></span></td>
+			<td><span th:text="${userArticleView.article_createdTime}"></span></td>
+		</tr>
+	</table>
+</body>
+</html>

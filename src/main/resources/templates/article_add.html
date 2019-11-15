@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="UTF-8" />
+<title>添加文章 - 我的博客</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/wangEditor.css}" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+
+<link th:href="@{/css/base.css}" rel="stylesheet" />
+<link th:href="@{/css/m.css}" rel="stylesheet" />
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/silder.js}"></script>
+<style>
+.tag_name {
+	display: block;
+	padding: 2px 8px;
+	background: #e9e9e9;
+	border-radius: 2px;
+	font-size: 12px;
+	max-width: 480px;
+	min color: #4f4f4f;
+	overflow: hidden;
+	white-space: nowrap;
+	width: 10px;
+}
+
+.tag__item-box {
+	margin-top: 4px;
+	display: flex;
+	flex-wrap: nowrap;
+	font-size: 14px;
+	line-height: 20px;
+	float: left;
+}
+
+.tag__box .tag_item-list {
+	margin-top: -4px;
+	display: flex;
+	flex-wrap: wrap;
+}
+</style>
+<script>
+	//初始参数个数
+	var tagCount = 2;
+
+	$(function() {
+		//新增按钮点击
+		$('#addTag')
+				.on(
+						'click',
+						function() {
+							tagCount++;
+							$node = '<span class="tag__item-box"><input type="text" name="label"  id="label'+tagCount+'" placeholder="label'+tagCount+'" class="tag_name"/>'
+									+ '<button class="removeTag btn btn-default">删除</button></span>';
+
+							//新表单项添加到“新增”按钮前面
+							$(this).parent().before($node);
+						});
+
+		//删除按钮点击
+		$('form').on('click', '.removeTag', function() {
+			$(this).parent().remove();
+			//varCount--;
+		});
+	});
+</script>
+<script>
+	//初始参数个数
+	var categoryCount = 2;
+
+	$(function() {
+		//新增按钮点击
+		$('#addCategory')
+				.on(
+						'click',
+						function() {
+							categoryCount++;
+							$node = '<span class="tag__item-box"><input type="text" name="category"  id="category'+categoryCount+'" placeholder="category'+categoryCount+'" class="tag_name"/>'
+									+ '<button class="removeCategory btn btn-default">删除</button></span>';
+
+							//新表单项添加到“新增”按钮前面
+							$(this).parent().before($node);
+						});
+
+		//删除按钮点击
+		$('form').on('click', '.removeCategory', function() {
+			$(this).parent().remove();
+			//varCount--;
+		});
+	});
+</script>
+</head>
+<body>
+	<header th:include="fragment/nav::nav"></header>
+	<div class="container">
+		<div class="col-md-10">
+			<form action="/article/add" method="post" onsubmit=""
+				enctype="multipart/form-data">
+				<div class="form-group">
+					<label>文章标题:</label> <input type="text" name="article_title"
+						class="form-control" />
+				</div>
+				<div class="form-group">
+					<label>文章分类:</label> <select name="article_sort_id">
+						<span th:each="articleSort:${articleSortList}">
+							<option th:value="${articleSort.article_sort_id}"><span
+									th:text="${articleSort.article_sort_name}"></span></option>
+
+					</span>
+
+
+					</select>
+
+
+				</div>
+				<div class="form-group">
+					<label>附件</label> <input type="file" name="fileName"
+						onchange="checkPhoto(this)" />
+				</div>
+				<div class="form-group">
+					<label>文章内容:</label>
+
+					<div id="div1"></div>
+					<textarea id="text1" style="width: 100%; height: 200px;"
+						name="article_content"></textarea>
+
+				</div>
+				<div class="tag_item-list form-group ">
+					<span class="tag__item-box"><label for="label">文章标签</label>
+					</span> <span class="tag__item-box"> <input type="text"
+						name="label" id="var1" placeholder="label1" class="tag_name" />
+						<button class="removeVar btn btn-default">删除</button>
+					</span> <span class="tag__item-box"> <input type="text"
+						name="label" id="var2" placeholder="label2" class="tag_name" />
+						<button class="removeTag btn btn-default">删除</button>
+					</span> <span> <a id="addTag" class=" btn btn-default">新增标签 </a>
+
+					</span>
+					<p>最多添加五个个人标签</p>
+				</div>
+				<div class="tag_item-list form-group ">
+
+					<span class="tag__item-box"><label for="category"
+						class="control-label">个人分类</label> </span> <span class="tag__item-box">
+						<input type="text" name="category" id="category1"
+						placeholder="category1" class="tag_name" />
+						<button class="removeCategpory btn btn-default">删除</button>
+					</span> <span class="tag__item-box"> <input type="text"
+						name="category" id="category2" placeholder="category2"
+						class="tag_name" />
+						<button class="removeCategpory btn btn-default">删除</button>
+					</span> <span> <a id="addCategory" class=" btn btn-default">新增分类
+					</a>
+
+					</span>
+				</div>
+				<input type="submit" value="添加" class="btn btn-default" />
+				</form>
+		</div>
+	</div>
+	<script>
+		$(function() {
+			$('#myModal').modal('hide')
+		});
+	</script>
+	<script>
+		/*$(function() {
+			$('#myModal').on('hide.bs.modal', function() {
+				alert('嘿，我听说您喜欢模态框...');
+			})
+		});*/
+	</script>
+	<script type="text/javascript">
+		$(function() {
+			$('.tag_name').bind('input propertychange', function() {
+				var obj = $(this);
+				var text_length = obj.val().length; //获取当前长度
+				var width = parseInt(text_length) * 12; //该12是改变前的宽度除以当前字符串的长度，算出每个字符的长度
+				obj.css('width', width + 'px');
+			});
+		})
+	</script>
+
+
+
+	<footer th:include="fragment/footer::footer"></footer>
+	<script>
+        //图片校验
+      <!-- function  checkPhoto(obj){
+            fileAllPath=$(obj).val()
+            suffix=fileAllPath.toLowerCase().split(".")
+           //alert(fileAllPath+" "+suffix[1])
+           if(suffix[1]!="png"&&suffix[1]!="jpg" && suffix[1]!="gif" && suffix[1]!="jpeg"){
+               alert("请上传.png、.jpg、.gif或.jpeg格式的图片")
+               $(obj).val("")
+             
+           }else{
+        	   var fileData= obj.files[0]
+               var size=fileData.size/(1024*1024)
+              if (size>1){
+                  alert("请上传大小小于1MB的图片")
+                  $(obj).val("")
+              }
+              
+           }
+        }-->
+    </script>
+	<script th:src="@{/js/wangEditor.min.js}"></script>
+	<script>
+        var E = window.wangEditor
+        var editor = new E('#div1')
+        var $text1 = $('#text1')
+        editor.customConfig.onchange = function (html) {
+            // 监控变化，同步更新到 textarea
+            $text1.val(html)
+        }
+        editor.create()
+        // 初始化 textarea 的值
+        $text1.val(editor.txt.html())
+    </script>
+
+
+
+
+</body>
+</html>
